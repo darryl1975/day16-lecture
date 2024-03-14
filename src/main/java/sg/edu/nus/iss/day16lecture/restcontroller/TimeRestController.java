@@ -11,16 +11,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,8 +53,9 @@ public class TimeRestController {
 
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
         headers.add("Darryl", (new Date()).toString());
+        headers.add("POSTTIMEJSON", "Testing only");
 
-        return new ResponseEntity<String>(responsePayload.toString(), headers, HttpStatus.OK);
+        return new ResponseEntity<String>(responsePayload.toString(), headers, HttpStatus.ACCEPTED);
     }
 
 }
