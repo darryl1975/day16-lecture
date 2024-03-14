@@ -5,7 +5,7 @@ import java.util.List;
 public class Employee {
     private String firstName;
     private String lastName;
-    private Long salary;
+    private Integer salary;
 
     private Address address;
 
@@ -27,11 +27,11 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public Long getSalary() {
+    public Integer getSalary() {
         return salary;
     }
 
-    public void setSalary(Long salary) {
+    public void setSalary(Integer salary) {
         this.salary = salary;
     }
 

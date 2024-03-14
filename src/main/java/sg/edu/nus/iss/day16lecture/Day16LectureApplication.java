@@ -1,9 +1,13 @@
 package sg.edu.nus.iss.day16lecture;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 
 import jakarta.json.Json;
@@ -11,6 +15,7 @@ import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObjectBuilder;
 import sg.edu.nus.iss.day16lecture.model.Address;
 import sg.edu.nus.iss.day16lecture.model.Employee;
+import sg.edu.nus.iss.day16lecture.model.Phone;
 
 @SpringBootApplication
 public class Day16LectureApplication implements CommandLineRunner {
@@ -54,7 +59,8 @@ public class Day16LectureApplication implements CommandLineRunner {
 		Employee emp = new Employee();
 		emp.setFirstName(employee.get("firstName").toString());
 		emp.setLastName(employee.getString("lastName"));
-		emp.setSalary(Long.parseLong(employee.get("salary").toString()));
+		emp.setSalary((employee.getInt("salary", 100000)));
+		// emp.setSalary(Long.parseLong(employee.get("salary").toString()));
 
 		JsonObject addressObj = employee.getJsonObject("address");
 		Address myAddress = new Address();
@@ -62,6 +68,15 @@ public class Day16LectureApplication implements CommandLineRunner {
 		myAddress.setLine2(addressObj.get("line2").toString());
 		myAddress.setPostal(addressObj.get("postal").toString());
 		emp.setAddress(myAddress);
+
+		JsonArray phones = employee.getJsonArray("phones");
+		List<Phone> phoneList = new ArrayList<>();
+		for(int i = 0; i < phones.size(); i++) {
+			JsonObject obj = phones.getJsonObject(i);
+			Phone phone = new Phone(obj.getString("type"), obj.getString("number"));
+			phoneList.add(phone);
+		}
+		emp.setPhones(phoneList);
 
 		System.out.println("Employee Entity: " + emp.toString());
 
